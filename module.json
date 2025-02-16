@@ -2,11 +2,20 @@
 	"name": "Runtime.Admin",
 	"assets":
 	[
+		"Components/Layout/AdminLayout.bay",
+		"Components/Layout/AdminLayoutModel.bay",
+		"Components/Pages/IndexPage/IndexPage.bay",
+		"Components/Pages/IndexPage/IndexPageModel.bay",
+		"Components/Pages/NotFoundPage/NotFoundPage.bay",
+		"Components/Pages/NotFoundPage/NotFoundPageModel.bay",
 		"ModuleDescription.bay"
 	],
-	"require": [
+	"require":
+	[
 	],
-	"groups": [
+	"groups":
+	[
+		"admin"
 	],
 	"modules":
 	[

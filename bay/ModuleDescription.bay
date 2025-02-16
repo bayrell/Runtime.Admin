@@ -1,7 +1,7 @@
 /*!
  *  BayLang Technology
  *
- *  (c) Copyright 2016-2024 "Ildar Bikmamatov" <support@bayrell.org>
+ *  (c) Copyright 2016-2025 "Ildar Bikmamatov" <support@bayrell.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@
 namespace Runtime.Admin;
 
 use Runtime.Entity.Hook;
-use Runtime.Web.Annotations.Widget;
+use Runtime.Web.Annotations.PageNotFound;
+use Runtime.Web.Annotations.Route;
+use Runtime.Web.Hooks.Components;
+use Runtime.Web.Hooks.SetupLayout;
 
 
 static class ModuleDescription
@@ -58,5 +61,20 @@ static class ModuleDescription
 	 */
 	pure Collection<Dict> entities() =>
 	[
+		/* Setup layout */
+		SetupLayout::create({
+			"admin": "Runtime.Admin.Components.Layout.AdminLayoutModel",
+		}),
+		
+		/* Components */
+		new Hook(classof Components, {
+			"components": ["Runtime.Admin.Components.Blocks.CSS"],
+			"header": ["Runtime.Admin.Components.Blocks.Seo"],
+		}),
+		
+		#ifdef BACKEND then
+		new PageNotFound("Runtime.Admin.Components.Pages.NotFoundPage.NotFoundPageModel"),
+		new Route("Runtime.Admin.Components.Routes"),
+		#endif
 	];
 }

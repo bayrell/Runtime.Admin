@@ -19,6 +19,9 @@
 namespace Runtime.Admin;
 
 use Runtime.Entity.Hook;
+use Runtime.ORM.Annotations.Table;
+use Runtime.ORM.Factory.MySQLFactory;
+use Runtime.Web.Annotations.Api;
 use Runtime.Web.Annotations.PageNotFound;
 use Runtime.Web.Annotations.Route;
 use Runtime.Web.Hooks.Components;
@@ -73,8 +76,18 @@ static class ModuleDescription
 		}),
 		
 		#ifdef BACKEND then
+		new Api("Runtime.Admin.Api.LoginApi"),
+		new Table("Runtime.Admin.Database.AdminUser"),
 		new PageNotFound("Runtime.Admin.Components.Pages.NotFoundPage.NotFoundPageModel"),
 		new Route("Runtime.Admin.Components.Routes"),
+		new MySQLFactory
+		{
+			"name": "default",
+			"host": @.env("MYSQL_HOST"),
+			"login": @.env("MYSQL_LOGIN"),
+			"password": @.env("MYSQL_PASSWORD"),
+			"database": @.env("MYSQL_DATABASE"),
+		},
 		#endif
 	];
 }

@@ -18,7 +18,40 @@
 
 <class name="Runtime.Admin.Components.Blocks.CSS">
 
-<style>
+<use name="Runtime.Widget.RowButtonsModel" component="true" />
+<use name="Runtime.Widget.Form.Form" component="true" />
+
+
+<style global="true">
+:root{
+	--widget-font-family: "Times New Roman";
+	--widget-font-size: 16px;
+	--widget-color-link: blue;
+}
+body, html{
+	font-family: var(--widget-font-family);
+	font-size: var(--widget-font-size);
+	line-height: var(--widget-line-height);
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3{
+	margin: 0; padding: 0;
+}
+.page_title{
+	text-align: center;
+	margin-bottom: 40px;
+}
+%(Form)widget_form{
+	%(Form)widget_form__field_label{
+		padding: 0;
+		margin-bottom: 5px;
+	}
+	%(Form)widget_form__field_row{
+		margin-bottom: 20px;
+	}
+}
 </style>
 
 </class>

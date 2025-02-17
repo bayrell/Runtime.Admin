@@ -18,6 +18,8 @@
 
 namespace Runtime.Admin.Components;
 
+use Runtime.Entity.Factory;
+use Runtime.Admin.Components.UserSettings;
 use Runtime.Web.BaseRoute;
 use Runtime.Web.RouteInfo;
 use Runtime.Web.RouteModel;
@@ -43,6 +45,19 @@ class Routes extends BaseRoute
 				"uri": "/",
 				"name": "admin:index",
 				"model": "Runtime.Admin.Components.Pages.IndexPage.IndexPageModel",
+			},
+			new RouteModel
+			{
+				"uri": "/login/",
+				"name": "admin:login",
+				"layout": "clear",
+				"model": new Factory
+				(
+					"Runtime.Auth.Components.LoginPage.LoginPageModel",
+					{
+						"user_settings": new UserSettings(),
+					}
+				),
 			},
 		];
 	}

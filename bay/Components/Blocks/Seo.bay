@@ -19,8 +19,8 @@
 <class name="Runtime.Admin.Components.Blocks.Seo">
 
 <template>
-    <title>{{ this.layout.getFullTitle() }}</title>
-    <script src={{ this.assets("vue.runtime.global.prod.js") }}></script>
+	<title>{{ this.layout.getFullTitle() }}</title>
+	<script src={{ this.assets("vue.runtime.global.prod.js") }}></script>
 	<script src={{ this.assets("runtime.js") }}></script>
 	<script src={{ this.assets("admin.js") }}></script>
 </template>

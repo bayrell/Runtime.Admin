@@ -19,6 +19,7 @@
 namespace Runtime.Admin;
 
 use Runtime.Entity.Hook;
+use Runtime.Admin.Components.UserSettings;
 use Runtime.ORM.Annotations.Table;
 use Runtime.ORM.Factory.MySQLFactory;
 use Runtime.Web.Annotations.Api;
@@ -75,8 +76,10 @@ static class ModuleDescription
 			"header": ["Runtime.Admin.Components.Blocks.Seo"],
 		}),
 		
+		/* Admin login */
+		UserSettings::register(),
+		
 		#ifdef BACKEND then
-		new Api("Runtime.Admin.Api.LoginApi"),
 		new Table("Runtime.Admin.Database.AdminUser"),
 		new PageNotFound("Runtime.Admin.Components.Pages.NotFoundPage.NotFoundPageModel"),
 		new Route("Runtime.Admin.Components.Routes"),

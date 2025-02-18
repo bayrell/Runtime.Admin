@@ -8,6 +8,7 @@
 		"Components/Pages/IndexPage/IndexPageModel.bay",
 		"Components/Pages/NotFoundPage/NotFoundPage.bay",
 		"Components/Pages/NotFoundPage/NotFoundPageModel.bay",
+		"Components/UserSettings.bay",
 		"ModuleDescription.bay"
 	],
 	"require":

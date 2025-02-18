@@ -21,13 +21,31 @@ namespace Runtime.Admin.Components;
 use Runtime.BaseStruct;
 use Runtime.Admin.Database.AdminUser;
 use Runtime.Auth.Components.UserSettings as BaseUserSettings;
+use Runtime.Web.BaseLayoutModel;
 
 
 struct UserSettings extends BaseUserSettings
 {
     string api_name = "admin.login";
     string token_name = "admin_auth";
+	
+	
+	/**
+	 * Returns main page
+	 */
+	string getMainPage(BaseLayoutModel layout) => layout.url("admin:index");
     
+	
+	/**
+	 * Returns routes
+	 */
+	string getParam(string name)
+	{
+		if (name == "login.name") return "admin:login";
+		if (name == "logout.name") return "admin:logout";
+		return parent(name);
+	}
+	
     
     #ifdef BACKEND then
 	

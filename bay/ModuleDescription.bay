@@ -77,7 +77,7 @@ static class ModuleDescription
 		}),
 		
 		/* Admin login */
-		UserSettings::register(),
+		UserSettings::create(),
 		
 		#ifdef BACKEND then
 		new Table("Runtime.Admin.Database.AdminUser"),

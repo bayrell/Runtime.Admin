@@ -20,6 +20,7 @@ namespace Runtime.Admin.Components;
 
 use Runtime.Entity.Factory;
 use Runtime.Admin.Components.UserSettings;
+use Runtime.Auth.Components.AuthMiddleware;
 use Runtime.Web.BaseRoute;
 use Runtime.Web.RouteInfo;
 use Runtime.Web.RouteModel;
@@ -31,6 +32,15 @@ class Routes extends BaseRoute
 	 * Returns layout name
 	 */
 	static string getLayoutName() => "admin";
+	
+	
+	/**
+	 * Returns middlewares
+	 */
+	static Collection getMiddleware() =>
+	[
+		new AuthMiddleware(new UserSettings),
+	];
 	
 	
 	/**

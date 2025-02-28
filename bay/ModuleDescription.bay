@@ -19,7 +19,8 @@
 namespace Runtime.Admin;
 
 use Runtime.Entity.Hook;
-use Runtime.Admin.Components.UserSettings;
+use Runtime.Admin.Components.AuthSettings;
+use Runtime.Admin.Components.Pages.UserPage.UserCrud;
 use Runtime.ORM.Annotations.Table;
 use Runtime.ORM.Factory.MySQLFactory;
 use Runtime.Web.Annotations.Api;
@@ -70,14 +71,16 @@ static class ModuleDescription
 			"admin": "Runtime.Admin.Components.Layout.AdminLayoutModel",
 		}),
 		
-		/* Components */
+		/* Setup hook */
+		new Hook("Runtime.Admin.AdminHook"),
 		new Hook(classof Components, {
 			"components": ["Runtime.Admin.Components.Blocks.CSS"],
 			"header": ["Runtime.Admin.Components.Blocks.Seo"],
 		}),
 		
 		/* Admin login */
-		UserSettings::create(),
+		AuthSettings::create(),
+		UserCrud::create(),
 		
 		#ifdef BACKEND then
 		new Table("Runtime.Admin.Database.AdminUser"),

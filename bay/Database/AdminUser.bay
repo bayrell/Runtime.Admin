@@ -20,6 +20,7 @@ namespace Runtime.Admin.Database;
 
 use Runtime.BaseStruct;
 use Runtime.Auth.Database.User;
+use Runtime.ORM.Annotations.StringType;
 
 
 class AdminUser extends User
@@ -28,4 +29,15 @@ class AdminUser extends User
 	 * Returns table name
 	 */
 	pure string getTableName() => "admin_users";
+	
+	
+	/**
+	 * Returns table schema
+	 */
+	pure Collection<BaseStruct> schema()
+	{
+		Collection items = parent();
+		items.push(new StringType{"name": "name"});
+		return items;
+	}
 }

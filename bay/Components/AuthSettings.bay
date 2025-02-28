@@ -18,44 +18,50 @@
 
 namespace Runtime.Admin.Components;
 
-use Runtime.Entity.Factory;
-use Runtime.Admin.Components.AuthSettings;
-use Runtime.Auth.Components.AuthMiddleware;
-use Runtime.Web.BaseRoute;
-use Runtime.Web.RouteInfo;
-use Runtime.Web.RouteModel;
+use Runtime.BaseStruct;
+use Runtime.Admin.Database.AdminUser;
+use Runtime.Auth.Components.UserSettings as BaseUserSettings;
+use Runtime.Web.BaseLayoutModel;
 
 
-class Routes extends BaseRoute
+struct AuthSettings extends BaseUserSettings
 {
-    /**
-	 * Returns layout name
+	/**
+	 * Returns api name
 	 */
-	static string getLayoutName() => "admin";
+	string getApiName() => "admin.login";
 	
 	
 	/**
-	 * Returns middlewares
+	 * Returns token name
 	 */
-	static Collection getMiddleware() =>
-	[
-		new AuthMiddleware(new AuthSettings),
-	];
+	string getTokenName() => "admin_auth";
+	
+	
+	/**
+	 * Returns main page
+	 */
+	string getMainPage(BaseLayoutModel layout) => layout.url("admin:index");
 	
 	
 	/**
 	 * Returns routes
 	 */
-	static Collection<RouteInfo> getRoutes()
+	string getParam(string name)
 	{
-		return
-		[
-			new RouteModel
-			{
-				"uri": "/",
-				"name": "admin:index",
-				"model": "Runtime.Admin.Components.Pages.IndexPage.IndexPageModel",
-			},
-		];
+		if (name == "login.name") return "admin:login";
+		if (name == "logout.name") return "admin:logout";
+		if (name == "logout.layout") return "admin";
+		return parent(name);
 	}
+	
+	
+	#ifdef BACKEND then
+	
+	/**
+	 * Returns user relation name
+	 */
+	string getRelationName() => classof AdminUser;
+	
+	#endif
 }

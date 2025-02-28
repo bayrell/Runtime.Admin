@@ -4,11 +4,16 @@
 	[
 		"Components/Layout/AdminLayout.bay",
 		"Components/Layout/AdminLayoutModel.bay",
+		"Components/Menu/Menu.bay",
+		"Components/Menu/MenuItem.bay",
 		"Components/Pages/IndexPage/IndexPage.bay",
 		"Components/Pages/IndexPage/IndexPageModel.bay",
 		"Components/Pages/NotFoundPage/NotFoundPage.bay",
 		"Components/Pages/NotFoundPage/NotFoundPageModel.bay",
-		"Components/UserSettings.bay",
+		"Components/Pages/UserPage/UserCrud.bay",
+		"Components/AdminUserCrud.bay",
+		"Components/AuthSettings.bay",
+		"AdminHook.bay",
 		"ModuleDescription.bay"
 	],
 	"require":

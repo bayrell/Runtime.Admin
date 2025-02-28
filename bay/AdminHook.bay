@@ -16,46 +16,44 @@
  *  limitations under the License.
  */
 
-namespace Runtime.Admin.Components;
+namespace Runtime.Admin;
 
-use Runtime.Entity.Factory;
-use Runtime.Admin.Components.AuthSettings;
-use Runtime.Auth.Components.AuthMiddleware;
-use Runtime.Web.BaseRoute;
-use Runtime.Web.RouteInfo;
-use Runtime.Web.RouteModel;
+use Runtime.BaseHook;
+use Runtime.Admin.Components.AdminMenu;
 
 
-class Routes extends BaseRoute
+class AdminHook extends BaseHook
 {
-    /**
-	 * Returns layout name
-	 */
-	static string getLayoutName() => "admin";
+	static const string MENU = "runtime.admin::menu";
 	
 	
 	/**
-	 * Returns middlewares
+	 * Returns method name by hook name
 	 */
-	static Collection getMiddleware() =>
-	[
-		new AuthMiddleware(new AuthSettings),
-	];
-	
-	
-	/**
-	 * Returns routes
-	 */
-	static Collection<RouteInfo> getRoutes()
+	string getMethodName(string hook_name)
 	{
-		return
-		[
-			new RouteModel
-			{
-				"uri": "/",
-				"name": "admin:index",
-				"model": "Runtime.Admin.Components.Pages.IndexPage.IndexPageModel",
-			},
-		];
+		if (hook_name == static::MENU) return "admin_menu";
+		return "";
+	}
+	
+	
+	/**
+	 * Register hooks
+	 */
+	void register_hooks()
+	{
+		this.register(static::MENU);
+	}
+	
+	
+	/**
+	 * Admin menu
+	 */
+	void admin_menu(Map params)
+	{
+		AdminMenu menu = params.get("items");
+		menu.addItem("Main", "admin:index");
+		menu.addItem("Users", "admin:users:index");
+		menu.addItem("Logout", "admin:logout");
 	}
 }

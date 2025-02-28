@@ -18,12 +18,80 @@
 
 <class name="Runtime.Admin.Components.Layout.AdminLayout" extends="Runtime.Web.DefaultLayout">
 
+<use name="Runtime.Admin.Components.Menu.MenuItem" />
+
+
 <style>
+.layout_admin{
+	display: flex;
+	align-items: stretch;
+	min-height: 100vh;
+	height: 100%;
+}
+.layout_admin__menu{
+	position: relative;
+	border-right: 1px var(--widget-color-border) solid;
+	width: 200px;
+	&_item{
+		&:hover{
+			background-color: var(--widget-color-hover);
+		}
+		a{
+			display: block;
+			font-size: 1rem;
+			padding: 10px;
+			border-bottom: 1px solid var(--widget-color-border);
+		}
+	}
+}
+.layout_admin__title{
+	padding: 10px;
+}
+.layout_admin__content{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: calc(100% - 200px);
+}
+.layout_admin__page{
+	position: relative;
+	flex: 1;
+	padding: 10px;
+}
 </style>
+
+
+<template name="renderMenuItem" args="MenuItem item, bool is_active = false">
+	<div class="layout_admin__menu_item">
+		<a href={{ item.href }} class="nolink" class={{ is_active ? "active" : "" }}>
+			{{ item.title }}
+		</a>
+	</div>
+</template>
+
+
+<template name="renderMenu">
+	%set Collection menu = this.layout.getMenu();
+	%for (int i=0; i<menu.items.count(); i++)
+	{
+		%render this.renderMenuItem(menu.items.get(i));
+	}
+</template>
+
 
 <template>
 	<div class="layout_admin">
-		%render this.renderCurrentPage();
+		<div class="layout_admin__menu">
+			%render this.renderMenu();
+		</div>
+		<div class="layout_admin__content">
+			<div class="layout_admin__title">
+				{{ this.layout.title }}
+			</div>
+			<div class="layout_admin__page">
+				%render this.renderCurrentPage();
+			</div>
+		</div>
 	</div>
 </template>
 

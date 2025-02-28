@@ -16,27 +16,14 @@
  *  limitations under the License.
  */
 
-namespace Runtime.Admin.Components.Layout;
+namespace Runtime.Admin.Components.Menu;
 
-use Runtime.Web.BaseLayoutModel;
-use Runtime.Admin.AdminHook;
-use Runtime.Admin.Components.Menu.Menu as AdminMenu;
-use Runtime.Admin.Components.Layout.AdminLayout;
+use Runtime.BaseObject;
 
 
-class AdminLayoutModel extends BaseLayoutModel
+class MenuItem extends BaseObject
 {
-	string component = classof AdminLayout;
-	
-	
-	/**
-	 * Returns admin menu
-	 */
-	Collection<Dict> getMenu()
-	{
-		Dict result = @.callHook(AdminHook::MENU, {
-			"items": new AdminMenu(this),
-		});
-		return result.get("items");
-	}
+	string title = "";
+	string href = "";
+	string route_name = "";
 }

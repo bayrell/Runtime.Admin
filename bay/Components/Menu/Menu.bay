@@ -16,43 +16,41 @@
  *  limitations under the License.
  */
 
-namespace Runtime.Admin.Components;
+namespace Runtime.Admin.Components.Menu;
 
-use Runtime.BaseStruct;
-use Runtime.Admin.Database.AdminUser;
-use Runtime.Auth.Components.UserSettings as BaseUserSettings;
+use Runtime.BaseObject;
+use Runtime.Admin.Components.Menu.MenuItem;
 use Runtime.Web.BaseLayoutModel;
 
 
-struct UserSettings extends BaseUserSettings
+class Menu extends BaseObject
 {
-    string api_name = "admin.login";
-    string token_name = "admin_auth";
+	BaseLayoutModel layout = null;
+	Collection items = [];
 	
 	
 	/**
-	 * Returns main page
+	 * Constructor
 	 */
-	string getMainPage(BaseLayoutModel layout) => layout.url("admin:index");
-    
-	
-	/**
-	 * Returns routes
-	 */
-	string getParam(string name)
+	void constructor(BaseLayoutModel layout)
 	{
-		if (name == "login.name") return "admin:login";
-		if (name == "logout.name") return "admin:logout";
-		return parent(name);
+		parent();
+		this.layout = layout;
 	}
 	
-    
-    #ifdef BACKEND then
 	
 	/**
-	 * Returns user relation name
+	 * Add item
 	 */
-	string getRelationName() => classof AdminUser;
-	
-	#endif
+	void addItem(string title, string route_name, Dict params = null)
+	{
+		/* Create item */
+		MenuItem item = new MenuItem;
+		item.title = title;
+		item.route_name = route_name;
+		item.href = this.layout.url(route_name, params);
+		
+		/* Add item to collection */
+		this.items.push(item);
+	}
 }

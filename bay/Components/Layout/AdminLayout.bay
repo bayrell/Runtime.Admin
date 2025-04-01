@@ -46,6 +46,7 @@
 }
 .layout_admin__title{
 	padding: 10px;
+	font-size: 16px;
 }
 .layout_admin__content{
 	position: relative;

@@ -56,6 +56,12 @@ class Routes extends BaseRoute
 				"name": "admin:index",
 				"model": "Runtime.Admin.Components.Pages.IndexPage.IndexPageModel",
 			},
+			new RouteModel
+			{
+				"uri": "/users",
+				"name": "admin:users:index",
+				"model": "Runtime.Admin.Components.Pages.UserPage.UserPageModel",
+			},
 		];
 	}
 }

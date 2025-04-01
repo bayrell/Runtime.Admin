@@ -73,16 +73,13 @@ static class ModuleDescription
 		
 		/* Setup hook */
 		new Hook("Runtime.Admin.AdminHook"),
-		new Hook(classof Components, {
-			"components": ["Runtime.Admin.Components.Blocks.CSS"],
-			"header": ["Runtime.Admin.Components.Blocks.Seo"],
-		}),
 		
 		/* Admin login */
 		AuthSettings::create(),
-		UserCrud::create(),
 		
 		#ifdef BACKEND then
+		new Api("Runtime.Admin.Components.Pages.UserPage.UserSaveApi"),
+		new Api("Runtime.Admin.Components.Pages.UserPage.UserSearchApi"),
 		new Table("Runtime.Admin.Database.AdminUser"),
 		new PageNotFound("Runtime.Admin.Components.Pages.NotFoundPage.NotFoundPageModel"),
 		new Route("Runtime.Admin.Components.Routes"),

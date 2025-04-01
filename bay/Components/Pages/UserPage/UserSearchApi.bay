@@ -16,44 +16,55 @@
  *  limitations under the License.
  */
 
-namespace Runtime.Admin;
+namespace Runtime.Admin.Components.Pages.UserPage;
 
-use Runtime.BaseHook;
-use Runtime.Admin.Components.AdminMenu;
+use Runtime.Admin.Components.Pages.UserPage.UserService;
+use Runtime.Web.Annotations.ApiMethod;
+use Runtime.Widget.Crud.CrudService;
+use Runtime.Widget.Crud.SearchApi;
 
 
-class AdminHook extends BaseHook
+class UserSearchApi extends SearchApi
 {
-	static const string MENU = "runtime.admin::menu";
+	/**
+	 * Returns api name
+	 */
+	static string getApiName() => "admin.users.search";
 	
 	
 	/**
-	 * Returns method name by hook name
+	 * Returns service
 	 */
-	string getMethodName(string hook_name)
+	CrudService createService() => new UserService();
+	
+	
+	/**
+	 * Returns item fields
+	 */
+	Collection getItemFields() =>
+	[
+		"id",
+		"login",
+		"name",
+	];
+	
+	
+	/**
+	 * Action item
+	 */
+	@ApiMethod
+	async void actionItem()
 	{
-		if (hook_name == static::MENU) return "admin_menu";
-		return "";
+		parent();
 	}
 	
 	
 	/**
-	 * Register hooks
+	 * Action search
 	 */
-	void register_hooks()
+	@ApiMethod
+	async void actionSearch()
 	{
-		this.register(static::MENU, "admin_menu", 50);
-	}
-	
-	
-	/**
-	 * Admin menu
-	 */
-	void admin_menu(Map params)
-	{
-		AdminMenu menu = params.get("items");
-		menu.addItem("Main", "admin:index");
-		menu.addItem("Users", "admin:users:index");
-		menu.addItem("Logout", "admin:logout");
+		parent();
 	}
 }

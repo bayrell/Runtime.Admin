@@ -18,18 +18,20 @@
 
 namespace Runtime.Admin.Components.Pages.UserPage;
 
-use Runtime.Admin.Database.AdminUser;
-use Runtime.Admin.Components.Pages.UserPage.UserService;
+use Runtime.Serializer;
 use Runtime.Web.ModelFactory;
 use Runtime.Web.RenderContainer;
-use Runtime.Widget.Crud.CrudDialog;
-use Runtime.Widget.Crud.CrudService;
 use Runtime.Widget.Input;
 use Runtime.Widget.Label;
+use Runtime.Widget.Crud.Pages.DialogPageModel;
+use Runtime.Admin.Components.Pages.UserPage.UserPage;
 
 
-struct UserCrud extends CrudDialog
+class UserPageModel extends DialogPageModel
 {
+	string component_name = classof UserPage;
+	
+	
 	/**
 	 * Returns api name
 	 */
@@ -42,29 +44,9 @@ struct UserCrud extends CrudDialog
 	
 	
 	/**
-	 * Returns true if api method is allow
+	 * Returns primary key
 	 */
-	Collection allowApiMethod(string action)
-	{
-		if (action == "actionDelete") return true;
-		if (action == "actionItem") return true;
-		if (action == "actionSave") return true;
-		if (action == "actionSearch") return true;
-		return false;
-	}
-	
-	
-	/**
-	 * Returns routes
-	 */
-	string getParam(string name, Dict params = null)
-	{
-		if (name == "route.index.name") return "admin:users:index";
-		if (name == "route.index.uri") return "/users";
-		if (name == "route.index.layout") return "admin";
-		if (name == "route.index.title") return "Users list";
-		return parent(name, params);
-	}
+	Collection getPrimaryKey() => ["id"];
 	
 	
 	/**
@@ -136,28 +118,48 @@ struct UserCrud extends CrudDialog
 		}
 		if (action == "edit")
 		{
-			return "Edit user";
+			return "Edit user " ~ item.get("name");
 		}
 		if (action == "delete")
 		{
-			return "Delete user";
+			return "Delete user " ~ item.get("name");
 		}
 		return "";
 	}
 	
 	
-	#ifdef BACKEND then
+	/**
+	 * Process frontend data
+	 */
+	void serialize(Serializer serializer, Map data)
+	{
+		parent(serializer, data);
+	}
+	
 	
 	/**
-	 * Returns service
+	 * Init widget settings
 	 */
-	CrudService createService() => new UserService;
+	void initParams(Dict params)
+	{
+		parent(params);
+	}
 	
 	
 	/**
-	 * Returns user relation name
+	 * Init widget settings
 	 */
-	string getRelationName() => classof AdminUser;
+	void initWidget(Dict params)
+	{
+		parent(params);
+	}
 	
-	#endif
+	
+	/**
+	 * Build title
+	 */
+	void buildTitle(RenderContainer container)
+	{
+		container.layout.setPageTitle("Users list");
+	}
 }

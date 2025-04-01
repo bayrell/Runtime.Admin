@@ -10,8 +10,8 @@
 		"Components/Pages/IndexPage/IndexPageModel.bay",
 		"Components/Pages/NotFoundPage/NotFoundPage.bay",
 		"Components/Pages/NotFoundPage/NotFoundPageModel.bay",
-		"Components/Pages/UserPage/UserCrud.bay",
-		"Components/AdminUserCrud.bay",
+		"Components/Pages/UserPage/UserPage.bay",
+		"Components/Pages/UserPage/UserPageModel.bay",
 		"Components/AuthSettings.bay",
 		"AdminHook.bay",
 		"ModuleDescription.bay"

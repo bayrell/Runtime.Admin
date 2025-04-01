@@ -18,6 +18,7 @@
 
 namespace Runtime.Admin.Components.Menu;
 
+use Runtime.lib;
 use Runtime.BaseObject;
 use Runtime.Admin.Components.Menu.MenuItem;
 use Runtime.Web.BaseLayoutModel;
@@ -40,9 +41,17 @@ class Menu extends BaseObject
 	
 	
 	/**
+	 * Find item
+	 */
+	int findItemByName(string route_name) =>
+		this.items.find(lib::equalAttr("route_name", route_name))
+	;
+	
+	
+	/**
 	 * Add item
 	 */
-	void addItem(string title, string route_name, Dict params = null)
+	void addItem(string title, string route_name, Dict params = null, int pos = -1)
 	{
 		/* Create item */
 		MenuItem item = new MenuItem;
@@ -51,6 +60,7 @@ class Menu extends BaseObject
 		item.href = this.layout.url(route_name, params);
 		
 		/* Add item to collection */
-		this.items.push(item);
+		if (pos == -1) this.items.push(item);
+		else this.items.insert(pos, item);
 	}
 }
